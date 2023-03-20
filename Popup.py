@@ -6,11 +6,11 @@ class PoPupAmorcesForward(QDialog):
         self.orientation = ""
         try :
             self.db = mariadb.connect(
-                    user = "pc_bioinfo",
-                    password="eE8*a-Ww.W",
-                    host="10.4.5.251",
-                    port=3306,
-                    database="NGS_Db")
+                    user = "",
+                    password="",
+                    host="",
+                    port=,
+                    database="")
         except mariadb.Error as e:
             print("Erreur de connexion à la base des amorces ngs :",e)
  
@@ -46,10 +46,10 @@ class PoPupAmorcesReverse(QDialog):
         self.orientation = ""
         try :
             self.db = mariadb.connect(
-                    user = "pc_bioinfo",
-                    password="eE8*a-Ww.W",
-                    host="10.4.5.251",
-                    port=3306,
+                    user = "",
+                    password="",
+                    host="",
+                    port=,
                     database="NGS_Db")
         except mariadb.Error as e:
             print("Erreur de connexion à la base des amorces ngs :",e)
