@@ -1,4 +1,5 @@
 from librairie import *
+from revcom import rev_function
 
 class FormulaireServeur(QWidget):
     def __init__(self, parent=None):
@@ -29,6 +30,7 @@ class FormulaireServeur(QWidget):
         label_reversecomplement = QLabel("Reverse complément")
         self.cb_rc = QCheckBox()
         self.formulaire.addRow(label_reversecomplement, self.cb_rc)
+        self.cb_rc.clicked.connect(self.revCompSeq)
 
         labelRegion = QLabel("Region génomique")
         self.tb_genomique = QLineEdit()
@@ -117,13 +119,15 @@ class FormulaireServeur(QWidget):
             self.PopUpNotSave()
             print("Le repertoire existe déjà")
 
+    def revCompSeq(self) :
+        self.tb_primerR.setText(rev_function(self.tb_primerR.text()))
+
+
     def deleteFile(self):
         print("Delete file")
         self.btnDelete.hide()
         self.btnSave.hide()
         self.btn_sendRequest.show()
-        self.tb_primerF.clear()
-        self.tb_primerR.clear()
         self.tb_genomique.clear()
         os.remove("result.txt")
         os.remove("faisabilite.log")
