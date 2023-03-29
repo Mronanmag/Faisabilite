@@ -15,6 +15,9 @@ class FormulaireServeur(QWidget):
         self.tb_primerR = QLineEdit()
         self.btnFindAmorceR = QPushButton("Reverse primer ")
 
+        self.btnFindCouple = QPushButton("Pair primer")
+        self.formulaire.addRow(self.btnFindCouple)
+
         self.layoutForward = QHBoxLayout()
         self.layoutReverse = QHBoxLayout()
 
