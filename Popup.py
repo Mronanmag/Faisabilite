@@ -115,6 +115,6 @@ class PoPupCouples(QDialog) :
 		amorces = self.cur.fetchall()
 		self.amorceF = amorces[0][0]
 		self.amorceR = amorces[0][1]
-		self.nameCouple = selected_item
+		self.nameCouple = selected_item.replace("-","_").replace(" ","_")
 		self.accept()
 
