@@ -41,11 +41,17 @@ class FastaPrimaire() :
 
     def setAmorceForward(self,forward):
         self.amorce_forward = forward.replace("I","N").replace("U","T")
-        self.len_forward = int((len(self.amorce_forward) * 2) / 3)
+        self.setOverlapF(int((len(self.amorce_forward) * 2) / 3))
 
     def setAmorceReverse(self,reverse) :
         self.amorce_reverse = reverse.replace("I","N").replace("U","T")
-        self.len_reverse = int((len(self.amorce_reverse) * 2) / 3)
+        self.setOverlapR(int((len(self.amorce_reverse) * 2) / 3))
+
+    def setOverlapF(self,overlap):
+        self.len_forward = overlap
+
+    def setOverlapR(self,overlap):
+        self.len_reverse = overlap
 
 
     def setPathFasta(self,path):
@@ -57,7 +63,8 @@ class FastaPrimaire() :
         nom_fichier_log = "Output/" + self.region + "_f.log"
         fo = open(self.nom_fichier_f,"w")
         fe = open(nom_fichier_log,"w")
-        subprocess.run(["cutadapt", self.path_fasta,"-g " + self.amorce_forward, "-O "+ str(self.len_forward),
+        print("\tOverlap F", self.len_forward)
+        subprocess.run(["cutadapt", self.path_fasta,"-g " + self.amorce_forward, "-O " + str(self.len_forward),
                         "--discard-untrimmed"], stdout = fo, stderr = fe)
         fo.close()
         fe.close()
@@ -67,7 +74,8 @@ class FastaPrimaire() :
         nom_fichier_log = "Output/" + self.region + "_f_r.log"
         fo = open(self.nom_fichier_r,"w")
         fe = open(nom_fichier_log,"w")
-        subprocess.run(["cutadapt",self.nom_fichier_f ,"-a " + self.amorce_reverse , "-O "+ str(self.len_reverse),
+        print("\tOverlap R", self.len_reverse)
+        subprocess.run(["cutadapt",self.nom_fichier_f ,"-a " + self.amorce_reverse , "-O " + str(self.len_reverse),
                         "--discard-untrimmed","-M","2000"], stdout = fo, stderr= fe)
         fo.close()
         fe.close()
@@ -111,8 +119,8 @@ class FastaPrimaire() :
     def recupererArgument(self):
         argv = sys.argv[1:]
         try :
-            opts, args = getopt.getopt(argv,"h:i:f:r:g:s:",["--input_file","--forward_primer","--reverse_primer",
-                                                         "--region","--species"])
+            opts, args = getopt.getopt(argv,"h:i:f:r:g:s:m:n:",["--input_file","--forward_primer","--reverse_primer",
+                                                         "--region","--species","--overlapF","--overlapR"])
         except getopt.GetoptError:
             print("python Faisabilite.py -i(input_file) -f(forward_primer) -r(reverse_primer) -g(region) -s(species)")
             sys.exit(2)
@@ -130,6 +138,12 @@ class FastaPrimaire() :
                 self.setRegion(arg)
             elif opt in("-s","--species") :
                 self.setSpecies(arg)
+            elif opt in("-m","--overlapF") :
+                if arg != "" :
+                    self.setOverlapF(int(arg))
+            elif opt in("-n","--overlapR") :
+                if arg != "" : 
+                    self.setOverlapR(int(arg))
 
     def statistiqueFichierFasta(self,fasta) :
         print("Début statistique")
