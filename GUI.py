@@ -95,6 +95,7 @@ class PrimerMain(QMainWindow):
 		dialog.exec_()
 		self.form.tb_primerF.setText(dialog.amorceF)
 		self.form.tb_primerR.setText(dialog.amorceR)
+		self.form.tb_genomique.setText(dialog.nameCouple)
 
 	def cleanDisplayText(self):
 		self.display_text.clear()

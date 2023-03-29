@@ -111,10 +111,10 @@ class PoPupCouples(QDialog) :
 
 	def handle_button(self):
 		selected_item = self.combo_box.currentText()
-		print(selected_item)
 		self.cur.execute("SELECT a1.sequence, a2.sequence FROM couple INNER JOIN amorces a1, amorces a2 WHERE couple.amorce_couple_1 = a1.id_amorce AND couple.amorce_couple_2 = a2.id_amorce AND nom_couple = \""+selected_item+"\"")
 		amorces = self.cur.fetchall()
 		self.amorceF = amorces[0][0]
 		self.amorceR = amorces[0][1]
+		self.nameCouple = selected_item
 		self.accept()
 
